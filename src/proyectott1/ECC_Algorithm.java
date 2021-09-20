@@ -38,7 +38,6 @@ public class ECC_Algorithm {
         ArrayList<Integer> l = new ArrayList<>();
 
         while (!n.equals(BigInteger.ZERO)) {
-
             l.add(n.mod(base).intValue());
             n = n.divide(base);
         }

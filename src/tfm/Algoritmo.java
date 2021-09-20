@@ -357,6 +357,7 @@ public class Algoritmo {
                         componentes.add(j, Double.parseDouble(contenido[j]));
                         salida = salida + contenido[j] + "\t";
                     }
+                   // System.out.println("salida:"+salida);
                     output = slp.calculaOutput(componentes,
                             ind.getOperacionEscalar(),
                             ind.getParametrosReales());

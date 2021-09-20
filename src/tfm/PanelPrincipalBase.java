@@ -1230,14 +1230,36 @@ public final class PanelPrincipalBase extends Observable implements ActionListen
             String path = new java.io.File(".").getCanonicalPath() + PanelPrincipalConstantes.COMANDO_GNUPLOT;
                // C:\Users\Carlos\Documents\NetBeansProjects\ProyectoTT1/gnuplot/gnuplot
             
-            System.out.println("");
+            System.out.println(path);
+            
+            
             String[] comando = {path};
+            System.out.println("");
+            
             p = Runtime.getRuntime().exec(comando);
             // Ruta del archivo de entrada
             String rutaPuntosSalida = Utilidades.conseguirRutaRelativa(getRoute()) + "p_salida.dat";
             OutputStream out = p.getOutputStream();
             if (getnVariables() == 1) {
                 // Envio de comandos al programa gnuplot para generar la grafica 2D
+                /*
+                set title 'Regresion Simbolica'
+                set xtics -100, 0.5, 100
+                set ytics -100, 0.5, 100
+                set grid
+                set grid xtics
+                set grid ytics
+                set xlabel 'Variable x'
+                set ylabel 'Variable y'
+                set style data lines
+                set style line 2 lt 1 lc rgb 'orange' lw 4
+                set style line 1 lt 3 lc rgb 'black' lw 6 
+                plot [-5:5] y=5 'C:\Users\Carlos\Documents\_TT\Datos1.dat
+                
+                */
+                
+                
+                
                 out.write("set title 'Regresion Simbolica' \n".getBytes());
                 out.write("set xtics -100, 0.5, 100 \n ".getBytes());
                 out.write("set ytics -100, 0.5, 100 \n ".getBytes());
@@ -1255,6 +1277,8 @@ public final class PanelPrincipalBase extends Observable implements ActionListen
                 grafica.append(rutaPuntosSalida);
                 grafica.append("' ls 2 title 'Resultados_Salida' \n");
                 out.write(grafica.toString().getBytes());
+                
+                
             }
             if (getnVariables() == 2) {
                 // Envio de comandos al programa gnuplot para generar la grafica 3D
@@ -1307,6 +1331,7 @@ public final class PanelPrincipalBase extends Observable implements ActionListen
                 grafica2.append("' lt 1 lc rgb 'blue' lw 5 title 'Resultados_Salida' \n");
                 out.write(grafica.toString().getBytes());
             }
+            System.out.println("out: "+out.toString());
             out.flush();
             out.close();
         } catch (IOException e1) {

@@ -15,7 +15,7 @@ public class Point {
     
     private BigInteger x; 
     private BigInteger y; 
-    
+    public static BigInteger a; 
     
     public  Point(){
     
@@ -36,10 +36,40 @@ public class Point {
         
         λ = (Q.y.subtract(this.y)).multiply((Q.x.subtract(this.x)).modInverse(p)); 
         
-        x= ((λ.multiply(λ)).subtract(this.x).subtract(Q.x)).modInverse(p); 
-        y = (λ.multiply((this.x.subtract(x))).subtract(this.y)).modInverse(p); 
+        x= ((λ.multiply(λ)).subtract(this.x).subtract(Q.x)).mod(p); 
+        y = (λ.multiply((this.x.subtract(x))).subtract(this.y)).mod(p); 
         
         return new Point(x,y); 
+    }
+    
+    public Point doubling(Point Q,BigInteger p){
+        BigInteger λ; 
+        BigInteger x3,y3,x1=Q.x,y1=Q.y; 
+        
+        λ = (new BigInteger("3").multiply(x1).multiply(x1).add(a)).multiply(new BigInteger("2").multiply(y1).modInverse(p)); 
+        
+        x3= ((λ.multiply(λ)).subtract(new BigInteger("2").multiply(this.x))).mod(p); 
+        y3 = (λ.multiply((x1.subtract(x3))).subtract(y1)).mod(p); 
+        
+        return new Point(x3,y3); 
+    }
+    
+    
+    public Point multiply(Point Q, BigInteger k, BigInteger p){
+        
+        long k_ = k.longValue(); 
+        
+        Point A = new Point(); 
+        
+        if(k_ == 1) return Q; 
+        
+        for(int i = 0; i<k_; i++) A = Q.doubling(Q, p); 
+            
+        
+        
+        return A; 
+        
+        
     }
     
     public Point substract(Point Q,BigInteger p){
